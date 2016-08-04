@@ -1,0 +1,6 @@
+Gamification.js
+===============
+
+
+Licence
+-------
