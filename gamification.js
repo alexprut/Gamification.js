@@ -5,7 +5,7 @@ function Gamification () {
   var _components = []
 
   function _addComponent (component) {
-    if (component instanceof ProgressBar) {
+    if (component instanceof ProgressBarComponent) {
       _components.push(component)
       component.start()
     } else {
