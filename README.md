@@ -19,7 +19,7 @@ gamification.addBreakpoint(new gamification.Breakpoint(100, function () {
 gamification.addMission(new gamification.ScrollMission(15, '#example'))
 gamification.addMission(new gamification.ClickMission(5, '#example button'))
 gamification.addMission(new gamification.TimeMission(5, 10000))
-gamification.addComponent(new gamification.ProgressBar(100, function () {
+gamification.addComponent(new gamification.ProgressBarComponent(100, function () {
     // callback function
 }))
 ```
