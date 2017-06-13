@@ -58,8 +58,9 @@ function Gamification () {
     }
   }
 
-  function Mission (points) {
+  function Mission (points, callback) {
     this.points = points || 0
+    this.callback = callback || function () {}
     this.id = Math.floor(Math.random() * 100000 * Math.random())
   }
 
@@ -70,12 +71,12 @@ function Gamification () {
   }
   Mission.prototype.achieveMission = function () {
     _achieveMission(this.id)
+    this.callback()
   }
 
-  function CustomMission (points, startFunc, actionFunc) {
-    Mission.call(this, points)
+  function CustomMission (points, startFunc, callback) {
+    Mission.call(this, points, callback)
     this.startFunc = startFunc || function () {}
-    this.actionFunc = actionFunc || function () {}
   }
 
   CustomMission.prototype = Object.create(Mission.prototype)
@@ -83,13 +84,9 @@ function Gamification () {
   CustomMission.prototype.start = function () {
     this.startFunc()
   }
-  CustomMission.prototype.achieveMission = function () {
-    _achieveMission(this.id)
-    this.actionFunc()
-  }
 
-  function ClickMission (points, element) {
-    Mission.call(this, points)
+  function ClickMission (points, element, callback) {
+    Mission.call(this, points, callback)
     this.element = element
   }
 
@@ -104,8 +101,8 @@ function Gamification () {
     })
   }
 
-  function ScrollMission (points, element) {
-    Mission.call(this, points)
+  function ScrollMission (points, element, callback) {
+    Mission.call(this, points, callback)
     this.element = element
   }
 
@@ -131,8 +128,8 @@ function Gamification () {
     this.actionFunc()
   }
 
-  function TimeMission (points, msTime) {
-    Mission.call(this, points)
+  function TimeMission (points, msTime, callback) {
+    Mission.call(this, points, callback)
     this.msTime = msTime
   }
 
@@ -144,7 +141,7 @@ function Gamification () {
     }, this.msTime, this)
   }
 
-  function ProgressBar (maxPoints, update, start) {
+  function ProgressBarComponent (maxPoints, update, start) {
     this.maxPoints = maxPoints || 0
     this.updateFunc = update || function () {}
     this.startFunc = start || function () {}
@@ -152,7 +149,7 @@ function Gamification () {
   }
 
   // TODO: Create a Component parent Class
-  ProgressBar.prototype.update = function () {
+  ProgressBarComponent.prototype.update = function () {
     if (!this.isFull) {
       this.updateFunc()
 
@@ -161,10 +158,10 @@ function Gamification () {
       }
     }
   }
-  ProgressBar.prototype.start = function () {
+  ProgressBarComponent.prototype.start = function () {
     this.startFunc()
   }
-  ProgressBar.prototype.getProgress = function () {
+  ProgressBarComponent.prototype.getProgress = function () {
     return Math.min(Math.max(Math.ceil(100 * _points / this.maxPoints), 0), 100)
   }
 
@@ -178,6 +175,6 @@ function Gamification () {
     ScrollMission: ScrollMission,
     TimeMission: TimeMission,
     Breakpoint: Breakpoint,
-    ProgressBar: ProgressBar
+    ProgressBarComponent: ProgressBarComponent
   }
 }
