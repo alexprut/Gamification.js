@@ -70,8 +70,8 @@ function Gamification () {
   Mission.prototype.start = function () {
   }
   Mission.prototype.achieveMission = function () {
-    _achieveMission(this.id)
     this.callback()
+    _achieveMission(this.id)
   }
 
   function CustomMission (points, startFunc, callback) {
