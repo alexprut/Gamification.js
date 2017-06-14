@@ -94,9 +94,8 @@ function Gamification () {
   ClickMission.prototype.constructor = ClickMission
   ClickMission.prototype.start = function () {
     $(this.element).on('click.gamification' + this.id, null, {missionObj: this}, function (e) {
-      $(this).off('click.gamification' + e.data.missionId)
-
       var missionObj = e.data.missionObj
+      $(this).off('click.gamification' + missionObj.id)
       missionObj.achieveMission()
     })
   }
